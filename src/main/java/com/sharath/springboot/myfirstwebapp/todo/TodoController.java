@@ -21,6 +21,7 @@ public class TodoController {
 		super();
 		this.todoservice = todoservice;
 	}
+	
 	@RequestMapping("list-todos")
 	public String listAllTodos(ModelMap model) {
 	List<Todo> todos=todoservice.findByUsername("sharath");
@@ -42,7 +43,7 @@ public class TodoController {
 		if(result.hasErrors())
 			return "todo";
 		String username=(String)model.get("name");
-	todoservice.addTodo(username,todo.getDescription(),LocalDate.now(),false);
+	todoservice.addTodo(username,todo.getDescription(),todo.getTargetdate(),false);
 	return "redirect:list-todos";
 	}
 	
@@ -50,6 +51,7 @@ public class TodoController {
 	public String deleteTodo(@RequestParam int id) {
 		todoservice.deleteById(id);
 	return "redirect:list-todos";	}
+	
 	
 	@RequestMapping(value="update-todo", method=RequestMethod.GET)
 	public String showUpdateTodo(@RequestParam int id,ModelMap model) {
